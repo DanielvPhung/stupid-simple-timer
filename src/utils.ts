@@ -8,7 +8,7 @@ export function playBeep(): void {
   try {
     // Reuse the same Audio instance to avoid mobile bugs
     if (!audio) {
-      audio = new Audio("/beep2.mp3");
+      audio = new Audio("/beep.mp3");
       audio.preload = "auto";
     }
 
