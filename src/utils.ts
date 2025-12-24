@@ -1,29 +1,33 @@
-export const playBeep = () => {
-  const AudioContext =
-    window.AudioContext || (window as any).webkitAudioContext;
+let audio: HTMLAudioElement | null = null;
 
-  const ctx = new AudioContext();
+/**
+ * Plays the beep sound.
+ * Safe to call multiple times.
+ */
+export function playBeep(): void {
+  try {
+    // Reuse the same Audio instance to avoid mobile bugs
+    if (!audio) {
+      audio = new Audio("/beep2.mp3");
+      audio.preload = "auto";
+    }
 
-  const oscillator = ctx.createOscillator();
-  const gain = ctx.createGain();
+    // Restart from beginning every time
+    audio.currentTime = 0;
 
-  oscillator.type = "sine"; 
-  oscillator.frequency.value = 880;
+    const playPromise = audio.play();
 
-  gain.gain.value = 0.50;
+    // Handle browsers that block autoplay
+    if (playPromise !== undefined) {
+      playPromise.catch(() => {
+        // ignored — requires user interaction first
+      });
+    }
+  } catch {
+    // no-op
+  }
+}
 
-  oscillator.connect(gain);
-  gain.connect(ctx.destination);
-
-  oscillator.start();
-
-  // stop after 150ms
-  oscillator.stop(ctx.currentTime + 0.15);
-
-  oscillator.onended = () => {
-    ctx.close();
-  };
-};
 
 export const formatTime = (totalSeconds: number): string => {
   const minutes = Math.floor(totalSeconds / 60);
