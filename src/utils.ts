@@ -7,10 +7,10 @@ export const playBeep = () => {
   const oscillator = ctx.createOscillator();
   const gain = ctx.createGain();
 
-  oscillator.type = "sine";      // clean beep
-  oscillator.frequency.value = 880; // Hz (A5)
+  oscillator.type = "sine"; 
+  oscillator.frequency.value = 880;
 
-  gain.gain.value = 0.05; // volume (keep low)
+  gain.gain.value = 0.50;
 
   oscillator.connect(gain);
   gain.connect(ctx.destination);
@@ -31,3 +31,9 @@ export const formatTime = (totalSeconds: number): string => {
 
   return `${minutes}:${seconds.toString().padStart(2, "0")}`;
 };
+
+export function vibrateOnce(durationMs: number = 500): void {
+  if (!("vibrate" in navigator)) return;
+
+  navigator.vibrate(durationMs);
+}

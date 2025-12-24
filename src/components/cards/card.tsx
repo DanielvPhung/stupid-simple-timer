@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { playBeep } from "../../utils";
+import { playBeep, vibrateOnce } from "../../utils";
 import { formatTime } from "../../utils";
 import "./card.css";
 
@@ -60,11 +60,12 @@ export const Card = ({
 
     countdownIntervalRef.current = window.setInterval(() => {
       setTime((t) => {
-        if (t <= 1) {
+        if (t <= 0) {
           stopCountdown();
           playBeep();
+          vibrateOnce(1000);
           handleCountdownComplete();
-          return baseSeconds; // reset to latest saved value
+          return baseSeconds;
         }
         return t - 1;
       });
@@ -78,6 +79,7 @@ export const Card = ({
     firedRef.current = false;
     clearLongPress();
 
+    if (isActive && isRunning) return;
     longPressTimeoutRef.current = window.setTimeout(() => {
       firedRef.current = true;
       handleLongPress(index);
