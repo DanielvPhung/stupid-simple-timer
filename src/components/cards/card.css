@@ -1,0 +1,53 @@
+.card-button {
+    height: 35vw;
+    width: 35vw;
+    max-height: 200px;
+    max-width: 200px;
+
+    /* base */
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+    background: linear-gradient(135deg, #f8fafc, #e5e7eb);
+    color: #111827;
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+
+    /* subtle depth */
+    box-shadow:
+        0 6px 16px rgba(15, 23, 42, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.6);
+
+    transition:
+        transform 0.18s ease,
+        box-shadow 0.18s ease,
+        background 0.18s ease;
+}
+
+.card-button:hover {
+    transform: translateY(-2px);
+    background: linear-gradient(135deg, #ffffff, #e5e7eb);
+    box-shadow:
+        0 10px 22px rgba(15, 23, 42, 0.12);
+}
+
+.card-button:active {
+    transform: translateY(0);
+    background: linear-gradient(135deg, #e5e7eb, #d1d5db);
+    box-shadow:
+        0 4px 10px rgba(15, 23, 42, 0.12),
+        inset 0 2px 4px rgba(0, 0, 0, 0.06);
+}
+
+.card-button:focus-visible {
+    outline: none;
+    box-shadow:
+        0 0 0 2px #c7d2fe,
+        0 6px 16px rgba(15, 23, 42, 0.08);
+}
+
+.card-button:disabled {
+    pointer-events: none;
+    opacity: 0.4;
+    cursor: not-allowed;
+}
